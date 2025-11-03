@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Todo {
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@map("verification")
+}
+
+/**
+ * OLD SCHEMA
+ * generator client {
+ * provider = "prisma-client-js"
+ * }
+ * datasource db {
+ * provider = "postgresql"
+ * url      = env("DATABASE_URL")
+ * }
+ * model User {
+ * id                   String               @id @default(uuid())
+ * email                String               @unique
+ * name                 String?
+ * password             String
+ * height               Float? // in cm
+ * dateOfBirth          DateTime?
+ * createdAt            DateTime             @default(now())
+ * updatedAt            DateTime             @updatedAt
+ * isActive             Boolean              @default(true)
+ * weightEntries        WeightEntry[]
+ * bloodPressureEntries BloodPressureEntry[]
+ * foodEntries          FoodEntry[]
+ * exerciseEntries      ExerciseEntry[]
+ * dailyNutritionGoals  DailyNutritionGoal?
+ * group                Groups               @default(USER)
+ * gender               Gender               @default(MALE)
+ * waterEntries         WaterEntry[]
+ * }
+ * model WeightEntry {
+ * id        String   @id @default(uuid())
+ * weight    Float // in kg or lbs based on user preference
+ * notes     String?
+ * date      DateTime
+ * createdAt DateTime @default(now())
+ * updatedAt DateTime @updatedAt
+ * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * userId    String
+ * }
+ * model BloodPressureEntry {
+ * id        String   @id @default(uuid())
+ * systolic  Int
+ * diastolic Int
+ * pulse     Int?
+ * position  Position @default(SITTING)
+ * notes     String?
+ * date      DateTime
+ * createdAt DateTime @default(now())
+ * updatedAt DateTime @updatedAt
+ * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * userId    String
+ * }
+ * model FoodEntry {
+ * id             String         @id @default(uuid())
+ * name           String
+ * quantity       Float
+ * unit           String
+ * calories       Int
+ * protein        Float? // in grams
+ * carbs          Float? // in grams
+ * fat            Float? // in grams
+ * mealType       MealType
+ * date           DateTime
+ * time           DateTime
+ * notes          String?
+ * createdAt      DateTime       @default(now())
+ * updatedAt      DateTime       @updatedAt
+ * user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * userId         String
+ * food           Food?          @relation(fields: [foodId], references: [id])
+ * foodId         String?
+ * foodCategories FoodCategory[] @relation("FoodCategoryFoods")
+ * }
+ * model FoodCategory {
+ * id        String   @id @default(uuid())
+ * name      String
+ * createdAt DateTime @default(now())
+ * updatedAt DateTime @updatedAt
+ * foods     Food[]   @relation("FoodCategoryFoods")
+ * FoodEntry FoodEntry[] @relation("FoodCategoryFoods")
+ * }
+ * model Food_Category_Food {
+ * foodId         String
+ * foodCategoryId String
+ * @@id([foodId, foodCategoryId])
+ * }
+ * model WaterEntry {
+ * id        String   @id @default(uuid())
+ * amount    Float
+ * unit      Unit
+ * date      DateTime
+ * createdAt DateTime @default(now())
+ * updatedAt DateTime @updatedAt
+ * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * userId    String
+ * }
+ * model Food {
+ * id           String      @id @default(uuid())
+ * name         String
+ * brand        String?
+ * servingSize  Float?
+ * servingUnit  String?
+ * calories     Int
+ * protein      Float? // in grams
+ * carbs        Float? // in grams
+ * fat          Float? // in grams
+ * fiber        Float? // in grams
+ * sugar        Float? // in grams
+ * sodium       Float? // in mg
+ * isCustom     Boolean     @default(false)
+ * createdAt    DateTime    @default(now())
+ * updatedAt    DateTime    @updatedAt
+ * foodEntries  FoodEntry[]
+ * resturauntId String?
+ * resturaunt   Resturaunt? @relation(fields: [resturauntId], references: [id])
+ * FoodCategory FoodCategory[] @relation("FoodCategoryFoods")
+ * }
+ * model Resturaunt {
+ * id        String   @id @default(uuid())
+ * name      String
+ * address   String
+ * createdAt DateTime @default(now())
+ * updatedAt DateTime @updatedAt
+ * foods     Food[]
+ * }
+ * model ExerciseEntry {
+ * id             String    @id @default(uuid())
+ * name           String
+ * duration       Int // in minutes
+ * caloriesBurned Int?
+ * intensity      Intensity @default(MODERATE)
+ * date           DateTime
+ * time           DateTime
+ * notes          String?
+ * createdAt      DateTime  @default(now())
+ * updatedAt      DateTime  @updatedAt
+ * user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * userId         String
+ * exercise       Exercise? @relation(fields: [exerciseId], references: [id])
+ * exerciseId     String?
+ * }
+ * model Exercise {
+ * id              String          @id @default(uuid())
+ * name            String
+ * caloriesPerMin  Float?
+ * exerciseType    ExerciseType
+ * createdAt       DateTime        @default(now())
+ * updatedAt       DateTime        @updatedAt
+ * exerciseEntries ExerciseEntry[]
+ * }
+ * model DailyNutritionGoal {
+ * id       String @id @default(uuid())
+ * calories Int
+ * protein  Float? // in grams
+ * carbs    Float? // in grams
+ * fat      Float? // in grams
+ * user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * userId   String @unique
+ * }
+ * enum MealType {
+ * BREAKFAST
+ * LUNCH
+ * DINNER
+ * SNACK
+ * }
+ * enum Position {
+ * SITTING
+ * STANDING
+ * LYING
+ * }
+ * enum Intensity {
+ * LOW
+ * MODERATE
+ * HIGH
+ * }
+ * enum ExerciseType {
+ * CARDIO
+ * STRENGTH
+ * FLEXIBILITY
+ * BALANCE
+ * SPORT
+ * OTHER
+ * }
+ * enum Groups {
+ * USER
+ * ADMIN
+ * }
+ * enum Gender {
+ * MALE
+ * FEMALE
+ * }
+ * enum Unit {
+ * SERVING
+ * GRAMS
+ * OUNCES
+ * POUNDS
+ * KILOGRAMS
+ * TEASPOON
+ * TABLESPOON
+ * CUP
+ * PINT
+ * QUART
+ * PINCH
+ * OUNCE
+ * POUND
+ * }
+ */
