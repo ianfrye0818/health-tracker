@@ -5,7 +5,7 @@ export const updateExerciseInputSchema = z
   .object({
     id: z.coerce.number(),
     name: z.string().min(1).optional(),
-    caloriesPerMin: z.coerce.number().optional(),
+    caloriesPerMin: z.coerce.number().nullish(),
     exerciseType: z.enum(ExerciseType).optional(),
   })
   .strict();

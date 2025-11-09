@@ -6,7 +6,7 @@ import { updateBloodPressureInputSchema } from '@/server/schemas';
 import { createServerFn } from '@tanstack/react-start';
 import { zodValidator } from '@tanstack/zod-adapter';
 
-export const udpateBloodPressureEntry = createServerFn({ method: 'POST' })
+export const updateBloodPressureEntry = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
   .inputValidator(zodValidator(updateBloodPressureInputSchema))
   .handler(

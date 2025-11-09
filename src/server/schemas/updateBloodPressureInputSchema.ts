@@ -6,10 +6,10 @@ export const updateBloodPressureInputSchema = z
     id: z.coerce.number(),
     systolic: z.coerce.number().optional(),
     diastolic: z.coerce.number().optional(),
-    pulse: z.coerce.number().optional(),
-    oxygenSaturation: z.coerce.number().optional(),
+    pulse: z.coerce.number().nullish(),
+    oxygenSaturation: z.coerce.number().nullish(),
     position: z.enum(Position).optional(),
-    notes: z.string().optional(),
+    notes: z.string().nullish(),
     date: z.coerce.date().optional(),
   })
   .strict();

@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as authRegisterRouteImport } from './routes/(auth)/register'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
@@ -29,6 +31,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authRegisterRoute = authRegisterRouteImport.update({
+  id: '/(auth)/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authLoginRoute = authLoginRouteImport.update({
+  id: '/(auth)/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -39,12 +51,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -52,20 +68,43 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/(auth)/login': typeof authLoginRoute
+  '/(auth)/register': typeof authRegisterRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy-policy' | '/terms-of-service' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/privacy-policy'
+    | '/terms-of-service'
+    | '/login'
+    | '/register'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy-policy' | '/terms-of-service' | '/api/auth/$'
-  id: '__root__' | '/' | '/privacy-policy' | '/terms-of-service' | '/api/auth/$'
+  to:
+    | '/'
+    | '/privacy-policy'
+    | '/terms-of-service'
+    | '/login'
+    | '/register'
+    | '/api/auth/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/privacy-policy'
+    | '/terms-of-service'
+    | '/(auth)/login'
+    | '/(auth)/register'
+    | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
+  authLoginRoute: typeof authLoginRoute
+  authRegisterRoute: typeof authRegisterRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -92,6 +131,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -106,6 +159,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
+  authLoginRoute: authLoginRoute,
+  authRegisterRoute: authRegisterRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
