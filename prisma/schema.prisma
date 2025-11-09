@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -15,29 +15,40 @@ model Todo {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id              String               @id @db.VarChar(255)
+  name            String               @db.VarChar(255)
+  email           String               @db.VarChar(255)
+  emailVerified   Boolean              @default(false)
+  image           String?              @db.VarChar(255)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @default(now()) @updatedAt
+  sessions        Session[]
+  accounts        Account[]
+  WeightEntires   WeightEntry[]
+  BloodPressure   BloodPressureEntry[]
+  waterEntries    WaterEntry[]
+  exerciseEntries ExerciseEntry[]
 
   @@unique([email])
   @@map("user")
 }
 
+model UserRole {
+  userId String @db.VarChar(255)
+  role   String @db.VarChar(50)
+
+  @@id([userId, role])
+}
+
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  ipAddress String?
-  userAgent String?
-  userId    String
+  ipAddress String?  @db.VarChar(255)
+  userAgent String?  @db.VarChar(255)
+  userId    String   @db.VarChar(255)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
@@ -45,18 +56,18 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
-  accountId             String
-  providerId            String
-  userId                String
+  id                    String    @id @db.VarChar(255)
+  accountId             String    @db.VarChar(255)
+  providerId            String    @db.VarChar(255)
+  userId                String    @db.VarChar(255)
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
-  idToken               String?
+  accessToken           String?   @db.VarChar(255)
+  refreshToken          String?   @db.VarChar(255)
+  idToken               String?   @db.VarChar(255)
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
+  scope                 String?   @db.VarChar(255)
+  password              String?   @db.VarChar(255)
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 
@@ -65,13 +76,80 @@ model Account {
 
 model Verification {
   id         String   @id
-  identifier String
-  value      String
+  identifier String   @db.VarChar(255)
+  value      String   @db.VarChar(255)
   expiresAt  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+model WeightEntry {
+  id        Int      @id @default(autoincrement())
+  weight    Float // in kg or lbs based on user preference
+  notes     String?  @db.VarChar(2000)
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BloodPressureEntry {
+  id               Int      @id @default(autoincrement())
+  systolic         Int
+  diastolic        Int
+  pulse            Int?
+  oxygenSaturation Int?
+  position         String   @default("SITTING")
+  notes            String?  @db.VarChar(2000)
+  date             DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  userId           String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WaterEntry {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  unit      String   @db.VarChar(50)
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ExerciseEntry {
+  id             Int      @id @default(autoincrement())
+  duration       Int // in minutes
+  caloriesBurned Int?
+  intensity      String   @default("MODERATE") @db.VarChar(50)
+  dateTime       DateTime
+  notes          String?  @db.VarChar(2000)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  userId         String   @db.VarChar(255)
+  exerciseId     Int?
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise Exercise? @relation(fields: [exerciseId], references: [id])
+}
+
+model Exercise {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(255)
+  caloriesPerMin Float?
+  exerciseType   String   @db.VarChar(50)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  exerciseEntries ExerciseEntry[]
 }
 
 /**
@@ -82,48 +160,6 @@ model Verification {
  * datasource db {
  * provider = "postgresql"
  * url      = env("DATABASE_URL")
- * }
- * model User {
- * id                   String               @id @default(uuid())
- * email                String               @unique
- * name                 String?
- * password             String
- * height               Float? // in cm
- * dateOfBirth          DateTime?
- * createdAt            DateTime             @default(now())
- * updatedAt            DateTime             @updatedAt
- * isActive             Boolean              @default(true)
- * weightEntries        WeightEntry[]
- * bloodPressureEntries BloodPressureEntry[]
- * foodEntries          FoodEntry[]
- * exerciseEntries      ExerciseEntry[]
- * dailyNutritionGoals  DailyNutritionGoal?
- * group                Groups               @default(USER)
- * gender               Gender               @default(MALE)
- * waterEntries         WaterEntry[]
- * }
- * model WeightEntry {
- * id        String   @id @default(uuid())
- * weight    Float // in kg or lbs based on user preference
- * notes     String?
- * date      DateTime
- * createdAt DateTime @default(now())
- * updatedAt DateTime @updatedAt
- * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- * userId    String
- * }
- * model BloodPressureEntry {
- * id        String   @id @default(uuid())
- * systolic  Int
- * diastolic Int
- * pulse     Int?
- * position  Position @default(SITTING)
- * notes     String?
- * date      DateTime
- * createdAt DateTime @default(now())
- * updatedAt DateTime @updatedAt
- * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- * userId    String
  * }
  * model FoodEntry {
  * id             String         @id @default(uuid())
@@ -159,16 +195,6 @@ model Verification {
  * foodCategoryId String
  * @@id([foodId, foodCategoryId])
  * }
- * model WaterEntry {
- * id        String   @id @default(uuid())
- * amount    Float
- * unit      Unit
- * date      DateTime
- * createdAt DateTime @default(now())
- * updatedAt DateTime @updatedAt
- * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- * userId    String
- * }
  * model Food {
  * id           String      @id @default(uuid())
  * name         String
@@ -197,31 +223,6 @@ model Verification {
  * createdAt DateTime @default(now())
  * updatedAt DateTime @updatedAt
  * foods     Food[]
- * }
- * model ExerciseEntry {
- * id             String    @id @default(uuid())
- * name           String
- * duration       Int // in minutes
- * caloriesBurned Int?
- * intensity      Intensity @default(MODERATE)
- * date           DateTime
- * time           DateTime
- * notes          String?
- * createdAt      DateTime  @default(now())
- * updatedAt      DateTime  @updatedAt
- * user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
- * userId         String
- * exercise       Exercise? @relation(fields: [exerciseId], references: [id])
- * exerciseId     String?
- * }
- * model Exercise {
- * id              String          @id @default(uuid())
- * name            String
- * caloriesPerMin  Float?
- * exerciseType    ExerciseType
- * createdAt       DateTime        @default(now())
- * updatedAt       DateTime        @updatedAt
- * exerciseEntries ExerciseEntry[]
  * }
  * model DailyNutritionGoal {
  * id       String @id @default(uuid())

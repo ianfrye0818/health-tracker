@@ -1,4 +1,8 @@
-// {
+{
+    "cSpell.words": [
+        "dtos"
+    ]
+} // {
 //   "files.watcherExclude": {
 //     "**/routeTree.gen.ts": true
 //   },

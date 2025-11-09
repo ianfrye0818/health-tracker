@@ -1,0 +1,13 @@
+export enum MeasureUnit {
+  SERVING = 'SERVING',
+  GRAMS = 'GRAMS',
+  OUNCES = 'OUNCES',
+  POUNDS = 'POUNDS',
+  KILOGRAMS = 'KILOGRAMS',
+  TEASPOON = 'TEASPOON',
+  TABLESPOON = 'TABLESPOON',
+  CUP = 'CUP',
+  PINT = 'PINT',
+  QUART = 'QUART',
+  PINCH = 'PINCH',
+}

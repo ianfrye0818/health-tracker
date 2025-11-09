@@ -54,6 +54,11 @@ export type Todo = Prisma.TodoModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserRole
+ * 
+ */
+export type UserRole = Prisma.UserRoleModel
+/**
  * Model Session
  * 
  */
@@ -68,3 +73,28 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model WeightEntry
+ * 
+ */
+export type WeightEntry = Prisma.WeightEntryModel
+/**
+ * Model BloodPressureEntry
+ * 
+ */
+export type BloodPressureEntry = Prisma.BloodPressureEntryModel
+/**
+ * Model WaterEntry
+ * 
+ */
+export type WaterEntry = Prisma.WaterEntryModel
+/**
+ * Model ExerciseEntry
+ * 
+ */
+export type ExerciseEntry = Prisma.ExerciseEntryModel
+/**
+ * Model Exercise
+ * 
+ */
+export type Exercise = Prisma.ExerciseModel

@@ -199,6 +199,10 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  WeightEntires?: Prisma.WeightEntryListRelationFilter
+  BloodPressure?: Prisma.BloodPressureEntryListRelationFilter
+  waterEntries?: Prisma.WaterEntryListRelationFilter
+  exerciseEntries?: Prisma.ExerciseEntryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -211,6 +215,10 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  WeightEntires?: Prisma.WeightEntryOrderByRelationAggregateInput
+  BloodPressure?: Prisma.BloodPressureEntryOrderByRelationAggregateInput
+  waterEntries?: Prisma.WaterEntryOrderByRelationAggregateInput
+  exerciseEntries?: Prisma.ExerciseEntryOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -226,6 +234,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  WeightEntires?: Prisma.WeightEntryListRelationFilter
+  BloodPressure?: Prisma.BloodPressureEntryListRelationFilter
+  waterEntries?: Prisma.WaterEntryListRelationFilter
+  exerciseEntries?: Prisma.ExerciseEntryListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -264,6 +276,10 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -276,6 +292,10 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -288,6 +308,10 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -300,6 +324,10 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -403,6 +431,62 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedOneWithoutWeightEntiresInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWeightEntiresInput, Prisma.UserUncheckedCreateWithoutWeightEntiresInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWeightEntiresInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWeightEntiresNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWeightEntiresInput, Prisma.UserUncheckedCreateWithoutWeightEntiresInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWeightEntiresInput
+  upsert?: Prisma.UserUpsertWithoutWeightEntiresInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWeightEntiresInput, Prisma.UserUpdateWithoutWeightEntiresInput>, Prisma.UserUncheckedUpdateWithoutWeightEntiresInput>
+}
+
+export type UserCreateNestedOneWithoutBloodPressureInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBloodPressureInput, Prisma.UserUncheckedCreateWithoutBloodPressureInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBloodPressureInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBloodPressureNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBloodPressureInput, Prisma.UserUncheckedCreateWithoutBloodPressureInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBloodPressureInput
+  upsert?: Prisma.UserUpsertWithoutBloodPressureInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBloodPressureInput, Prisma.UserUpdateWithoutBloodPressureInput>, Prisma.UserUncheckedUpdateWithoutBloodPressureInput>
+}
+
+export type UserCreateNestedOneWithoutWaterEntriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWaterEntriesInput, Prisma.UserUncheckedCreateWithoutWaterEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWaterEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWaterEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWaterEntriesInput, Prisma.UserUncheckedCreateWithoutWaterEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWaterEntriesInput
+  upsert?: Prisma.UserUpsertWithoutWaterEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWaterEntriesInput, Prisma.UserUpdateWithoutWaterEntriesInput>, Prisma.UserUncheckedUpdateWithoutWaterEntriesInput>
+}
+
+export type UserCreateNestedOneWithoutExerciseEntriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExerciseEntriesInput, Prisma.UserUncheckedCreateWithoutExerciseEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExerciseEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutExerciseEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExerciseEntriesInput, Prisma.UserUncheckedCreateWithoutExerciseEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExerciseEntriesInput
+  upsert?: Prisma.UserUpsertWithoutExerciseEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExerciseEntriesInput, Prisma.UserUpdateWithoutExerciseEntriesInput>, Prisma.UserUncheckedUpdateWithoutExerciseEntriesInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
@@ -412,6 +496,10 @@ export type UserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -423,6 +511,10 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -450,6 +542,10 @@ export type UserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -461,6 +557,10 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -472,6 +572,10 @@ export type UserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -483,6 +587,10 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -510,6 +618,10 @@ export type UserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -521,6 +633,314 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWeightEntiresInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutWeightEntiresInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutWeightEntiresInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWeightEntiresInput, Prisma.UserUncheckedCreateWithoutWeightEntiresInput>
+}
+
+export type UserUpsertWithoutWeightEntiresInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWeightEntiresInput, Prisma.UserUncheckedUpdateWithoutWeightEntiresInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWeightEntiresInput, Prisma.UserUncheckedCreateWithoutWeightEntiresInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWeightEntiresInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWeightEntiresInput, Prisma.UserUncheckedUpdateWithoutWeightEntiresInput>
+}
+
+export type UserUpdateWithoutWeightEntiresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWeightEntiresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutBloodPressureInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutBloodPressureInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutBloodPressureInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBloodPressureInput, Prisma.UserUncheckedCreateWithoutBloodPressureInput>
+}
+
+export type UserUpsertWithoutBloodPressureInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBloodPressureInput, Prisma.UserUncheckedUpdateWithoutBloodPressureInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBloodPressureInput, Prisma.UserUncheckedCreateWithoutBloodPressureInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBloodPressureInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBloodPressureInput, Prisma.UserUncheckedUpdateWithoutBloodPressureInput>
+}
+
+export type UserUpdateWithoutBloodPressureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBloodPressureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWaterEntriesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutWaterEntriesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutWaterEntriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWaterEntriesInput, Prisma.UserUncheckedCreateWithoutWaterEntriesInput>
+}
+
+export type UserUpsertWithoutWaterEntriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWaterEntriesInput, Prisma.UserUncheckedUpdateWithoutWaterEntriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWaterEntriesInput, Prisma.UserUncheckedCreateWithoutWaterEntriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWaterEntriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWaterEntriesInput, Prisma.UserUncheckedUpdateWithoutWaterEntriesInput>
+}
+
+export type UserUpdateWithoutWaterEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWaterEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutExerciseEntriesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutExerciseEntriesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutExerciseEntriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutExerciseEntriesInput, Prisma.UserUncheckedCreateWithoutExerciseEntriesInput>
+}
+
+export type UserUpsertWithoutExerciseEntriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutExerciseEntriesInput, Prisma.UserUncheckedUpdateWithoutExerciseEntriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutExerciseEntriesInput, Prisma.UserUncheckedCreateWithoutExerciseEntriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutExerciseEntriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutExerciseEntriesInput, Prisma.UserUncheckedUpdateWithoutExerciseEntriesInput>
+}
+
+export type UserUpdateWithoutExerciseEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutExerciseEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -531,11 +951,19 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  WeightEntires: number
+  BloodPressure: number
+  waterEntries: number
+  exerciseEntries: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  WeightEntires?: boolean | UserCountOutputTypeCountWeightEntiresArgs
+  BloodPressure?: boolean | UserCountOutputTypeCountBloodPressureArgs
+  waterEntries?: boolean | UserCountOutputTypeCountWaterEntriesArgs
+  exerciseEntries?: boolean | UserCountOutputTypeCountExerciseEntriesArgs
 }
 
 /**
@@ -562,6 +990,34 @@ export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.AccountWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWeightEntiresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WeightEntryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBloodPressureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BloodPressureEntryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWaterEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WaterEntryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountExerciseEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExerciseEntryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -573,6 +1029,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  WeightEntires?: boolean | Prisma.User$WeightEntiresArgs<ExtArgs>
+  BloodPressure?: boolean | Prisma.User$BloodPressureArgs<ExtArgs>
+  waterEntries?: boolean | Prisma.User$waterEntriesArgs<ExtArgs>
+  exerciseEntries?: boolean | Prisma.User$exerciseEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -610,6 +1070,10 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  WeightEntires?: boolean | Prisma.User$WeightEntiresArgs<ExtArgs>
+  BloodPressure?: boolean | Prisma.User$BloodPressureArgs<ExtArgs>
+  waterEntries?: boolean | Prisma.User$waterEntriesArgs<ExtArgs>
+  exerciseEntries?: boolean | Prisma.User$exerciseEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -620,6 +1084,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    WeightEntires: Prisma.$WeightEntryPayload<ExtArgs>[]
+    BloodPressure: Prisma.$BloodPressureEntryPayload<ExtArgs>[]
+    waterEntries: Prisma.$WaterEntryPayload<ExtArgs>[]
+    exerciseEntries: Prisma.$ExerciseEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1025,6 +1493,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  WeightEntires<T extends Prisma.User$WeightEntiresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$WeightEntiresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeightEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  BloodPressure<T extends Prisma.User$BloodPressureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$BloodPressureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BloodPressureEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  waterEntries<T extends Prisma.User$waterEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$waterEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WaterEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exerciseEntries<T extends Prisma.User$exerciseEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$exerciseEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1290,6 +1762,7 @@ export type UserCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Users.
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1308,6 +1781,7 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Users.
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1492,6 +1966,102 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.WeightEntires
+ */
+export type User$WeightEntiresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WeightEntry
+   */
+  select?: Prisma.WeightEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WeightEntry
+   */
+  omit?: Prisma.WeightEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WeightEntryInclude<ExtArgs> | null
+  where?: Prisma.WeightEntryWhereInput
+  orderBy?: Prisma.WeightEntryOrderByWithRelationInput | Prisma.WeightEntryOrderByWithRelationInput[]
+  cursor?: Prisma.WeightEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WeightEntryScalarFieldEnum | Prisma.WeightEntryScalarFieldEnum[]
+}
+
+/**
+ * User.BloodPressure
+ */
+export type User$BloodPressureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BloodPressureEntry
+   */
+  select?: Prisma.BloodPressureEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BloodPressureEntry
+   */
+  omit?: Prisma.BloodPressureEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BloodPressureEntryInclude<ExtArgs> | null
+  where?: Prisma.BloodPressureEntryWhereInput
+  orderBy?: Prisma.BloodPressureEntryOrderByWithRelationInput | Prisma.BloodPressureEntryOrderByWithRelationInput[]
+  cursor?: Prisma.BloodPressureEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BloodPressureEntryScalarFieldEnum | Prisma.BloodPressureEntryScalarFieldEnum[]
+}
+
+/**
+ * User.waterEntries
+ */
+export type User$waterEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WaterEntry
+   */
+  select?: Prisma.WaterEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WaterEntry
+   */
+  omit?: Prisma.WaterEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WaterEntryInclude<ExtArgs> | null
+  where?: Prisma.WaterEntryWhereInput
+  orderBy?: Prisma.WaterEntryOrderByWithRelationInput | Prisma.WaterEntryOrderByWithRelationInput[]
+  cursor?: Prisma.WaterEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WaterEntryScalarFieldEnum | Prisma.WaterEntryScalarFieldEnum[]
+}
+
+/**
+ * User.exerciseEntries
+ */
+export type User$exerciseEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExerciseEntry
+   */
+  select?: Prisma.ExerciseEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExerciseEntry
+   */
+  omit?: Prisma.ExerciseEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExerciseEntryInclude<ExtArgs> | null
+  where?: Prisma.ExerciseEntryWhereInput
+  orderBy?: Prisma.ExerciseEntryOrderByWithRelationInput | Prisma.ExerciseEntryOrderByWithRelationInput[]
+  cursor?: Prisma.ExerciseEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExerciseEntryScalarFieldEnum | Prisma.ExerciseEntryScalarFieldEnum[]
 }
 
 /**

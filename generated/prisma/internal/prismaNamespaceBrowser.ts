@@ -50,9 +50,15 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 export const ModelName = {
   Todo: 'Todo',
   User: 'User',
+  UserRole: 'UserRole',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  WeightEntry: 'WeightEntry',
+  BloodPressureEntry: 'BloodPressureEntry',
+  WaterEntry: 'WaterEntry',
+  ExerciseEntry: 'ExerciseEntry',
+  Exercise: 'Exercise'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -62,6 +68,9 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
@@ -88,6 +97,14 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserRoleScalarFieldEnum = {
+  userId: 'userId',
+  role: 'role'
+} as const
+
+export type UserRoleScalarFieldEnum = (typeof UserRoleScalarFieldEnum)[keyof typeof UserRoleScalarFieldEnum]
 
 
 export const SessionScalarFieldEnum = {
@@ -135,12 +152,91 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const WeightEntryScalarFieldEnum = {
+  id: 'id',
+  weight: 'weight',
+  notes: 'notes',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type WeightEntryScalarFieldEnum = (typeof WeightEntryScalarFieldEnum)[keyof typeof WeightEntryScalarFieldEnum]
+
+
+export const BloodPressureEntryScalarFieldEnum = {
+  id: 'id',
+  systolic: 'systolic',
+  diastolic: 'diastolic',
+  pulse: 'pulse',
+  oxygenSaturation: 'oxygenSaturation',
+  position: 'position',
+  notes: 'notes',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type BloodPressureEntryScalarFieldEnum = (typeof BloodPressureEntryScalarFieldEnum)[keyof typeof BloodPressureEntryScalarFieldEnum]
+
+
+export const WaterEntryScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  unit: 'unit',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type WaterEntryScalarFieldEnum = (typeof WaterEntryScalarFieldEnum)[keyof typeof WaterEntryScalarFieldEnum]
+
+
+export const ExerciseEntryScalarFieldEnum = {
+  id: 'id',
+  duration: 'duration',
+  caloriesBurned: 'caloriesBurned',
+  intensity: 'intensity',
+  dateTime: 'dateTime',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  exerciseId: 'exerciseId'
+} as const
+
+export type ExerciseEntryScalarFieldEnum = (typeof ExerciseEntryScalarFieldEnum)[keyof typeof ExerciseEntryScalarFieldEnum]
+
+
+export const ExerciseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  caloriesPerMin: 'caloriesPerMin',
+  exerciseType: 'exerciseType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExerciseScalarFieldEnum = (typeof ExerciseScalarFieldEnum)[keyof typeof ExerciseScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {

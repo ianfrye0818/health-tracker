@@ -9,7 +9,13 @@
  */
 export type * from './models/Todo.ts'
 export type * from './models/User.ts'
+export type * from './models/UserRole.ts'
 export type * from './models/Session.ts'
 export type * from './models/Account.ts'
 export type * from './models/Verification.ts'
+export type * from './models/WeightEntry.ts'
+export type * from './models/BloodPressureEntry.ts'
+export type * from './models/WaterEntry.ts'
+export type * from './models/ExerciseEntry.ts'
+export type * from './models/Exercise.ts'
 export type * from './commonInputTypes.ts'
