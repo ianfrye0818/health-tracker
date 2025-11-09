@@ -1,5 +1,5 @@
 import { prisma } from '@/db';
-import { NotFoundException } from '@/Exceptions';
+import { NotFoundException } from '@/exceptions';
 import { authMiddleware } from '@/server/middleware';
 import { updateWaterEntryInputSchema } from '@/server/schemas';
 import { createServerFn } from '@tanstack/react-start';

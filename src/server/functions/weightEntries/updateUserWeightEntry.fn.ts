@@ -1,12 +1,12 @@
-import { prisma } from "@/db";
-import { NotFoundException } from "@/Exceptions";
-import { MessageResponseDto } from "@/server/dtos";
-import { authMiddleware } from "@/server/middleware";
-import { updateWeightEntryInputSchema } from "@/server/schemas";
-import { createServerFn } from "@tanstack/react-start";
-import { zodValidator } from "@tanstack/zod-adapter";
+import { prisma } from '@/db';
+import { NotFoundException } from '@/exceptions';
+import { MessageResponseDto } from '@/server/dtos';
+import { authMiddleware } from '@/server/middleware';
+import { updateWeightEntryInputSchema } from '@/server/schemas';
+import { createServerFn } from '@tanstack/react-start';
+import { zodValidator } from '@tanstack/zod-adapter';
 
-export const updateUserWeightEntry = createServerFn({ method: "POST" })
+export const updateUserWeightEntry = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
   .inputValidator(zodValidator(updateWeightEntryInputSchema))
   .handler(
@@ -35,7 +35,7 @@ export const updateUserWeightEntry = createServerFn({ method: "POST" })
       });
 
       return {
-        message: "Weight entry updated successfully",
+        message: 'Weight entry updated successfully',
         data: { id: weightEntry.id },
         statusCode: 200,
         success: true,

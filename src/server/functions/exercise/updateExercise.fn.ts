@@ -1,5 +1,5 @@
 import { prisma } from '@/db';
-import { NotFoundException } from '@/Exceptions';
+import { NotFoundException } from '@/exceptions';
 import { MessageResponseDto } from '@/server/dtos';
 import { authMiddleware } from '@/server/middleware';
 import { updateExerciseInputSchema } from '@/server/schemas';
