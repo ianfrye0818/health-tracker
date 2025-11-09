@@ -22,7 +22,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "/Users/ianfrye/Desktop/health-tracker/generated/prisma",
+      "value": "/home/ianfrye/Development/health-tracker/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -31,12 +31,12 @@ const config: runtime.GetPrismaClientConfig = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/ianfrye/Desktop/health-tracker/prisma/schema.prisma",
+    "sourceFilePath": "/home/ianfrye/Development/health-tracker/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../prisma",

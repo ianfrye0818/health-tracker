@@ -128,11 +128,34 @@ code {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@layer components {
+  .form {
+    @apply flex flex-col gap-4;
+  }
+
+  .form-buttons {
+    @apply flex justify-end gap-2 w-full;
+  }
+
+  .icon {
+    @apply size-4;
+  }
+
+  .icon-margin {
+    @apply mr-2;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  form {
+    @apply flex flex-col gap-4;
   }
 }
