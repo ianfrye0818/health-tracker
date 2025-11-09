@@ -1,0 +1,26 @@
+
+import { handleOptimisticUpdateGuarded, hanldeOptimisticError } from "@/lib/handleOptimistic"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { Actions, EXERCISE_QUERY_KEY } from "./shared"
+import { removeExercise } from "@/server/functions/exercise"
+import { appToast } from "@/components/AppToast"
+import { ErrorFormatter } from "@/lib/ErrorFormatter"
+import { ExerciseDto } from "@/server/dtos"
+
+export const useRemoveExercise = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (payload: ExerciseDto) => removeExercise({ data: payload }),
+    onMutate: (payload) =>
+      handleOptimisticUpdateGuarded(queryClient, [EXERCISE_QUERY_KEY], Actions.remove(payload)),
+    onError: (error, __, ctx) => {
+      hanldeOptimisticError(queryClient, ctx?.prevData);
+      appToast.error(ErrorFormatter.format(error));
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [EXERCISE_QUERY_KEY], type: 'active', exact: false })
+      appToast.success('Exercise Removed Successfully!')
+    }
+  })
+}

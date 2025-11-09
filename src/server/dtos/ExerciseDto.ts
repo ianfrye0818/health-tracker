@@ -4,7 +4,7 @@ import { ExerciseType } from '../enums';
 export interface ExerciseDto {
   id: number;
   name: string;
-  caloriesMerMin: number | null;
+  caloriesPerMin: number | null;
   exerciseType: ExerciseType;
 }
 
@@ -12,7 +12,7 @@ export function toExerciseDto(exercise: DbExercise): ExerciseDto {
   return {
     id: exercise.id,
     name: exercise.name,
-    caloriesMerMin: exercise.caloriesPerMin,
+    caloriesPerMin: exercise.caloriesPerMin,
     exerciseType: exercise.exerciseType as ExerciseType,
   };
 }

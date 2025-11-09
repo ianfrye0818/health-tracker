@@ -24,7 +24,7 @@ export const useCreateExerciseEntry = () => {
       exercise: {
         id: payload.exerciseId || Date.now(),
         name: '',
-        caloriesMerMin: 0,
+        caloriesPerMin: 0,
         exerciseType: ExerciseType.OTHER
       },
       ...payload

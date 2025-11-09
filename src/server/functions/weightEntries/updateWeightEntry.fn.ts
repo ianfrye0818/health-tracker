@@ -6,7 +6,7 @@ import { updateWeightEntryInputSchema } from '@/server/schemas';
 import { createServerFn } from '@tanstack/react-start';
 import { zodValidator } from '@tanstack/zod-adapter';
 
-export const updateUserWeightEntry = createServerFn({ method: 'POST' })
+export const updateWeightEntry = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
   .inputValidator(zodValidator(updateWeightEntryInputSchema))
   .handler(
