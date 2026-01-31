@@ -1,4 +1,3 @@
-import { SelectContent, SelectValue } from '@radix-ui/react-select';
 import {
   Controller,
   FieldPath,
@@ -7,7 +6,7 @@ import {
 } from 'react-hook-form';
 import z from 'zod';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
-import { Select, SelectItem, SelectTrigger } from '../ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 interface Props<T extends z.ZodType<FieldValues>> {
   options: { label: string; value: string }[];

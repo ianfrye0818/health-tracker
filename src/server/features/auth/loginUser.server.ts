@@ -7,10 +7,11 @@ import * as bcrypt from 'bcrypt';
 
 export const loginUser = async (email: string, password: string): Promise<AppUser> => {
     const user = await prisma.user.findUnique({ where: { email }});
+    debugger;
 
     if (!user || !user.isActive) throw new UnauthorizedException('Invalid credentials');
 
-    const isPasswordValid = await bcrypt.compare(user.passwordHash, password);
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
 
     if (!isPasswordValid) throw new UnauthorizedException('Invalid credentials');
     

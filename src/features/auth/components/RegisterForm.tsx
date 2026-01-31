@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import useAppForm from '@/hooks/useAppForm';
 import { formResolver } from '@/lib/form-resolver';
-import { loginInputSchema } from '@/lib/schemas/loginInputSchema';
 import { RegisterUserInput, registerUserInputSchema } from '@/lib/schemas/registerUserInputSchema';
 import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
@@ -14,7 +13,7 @@ export function RegisterForm() {
   const { mutateAsync: registerUser, isPending } = useRegisterUser();
   const form = useAppForm<RegisterUserInput>({
     formName: 'RegisterForm',
-    resolver: formResolver(loginInputSchema),
+    resolver: formResolver(registerUserInputSchema),
     defaultValues: {
         name: '',
         email: '',

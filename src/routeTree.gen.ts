@@ -12,10 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as rootRouteRouteImport } from './routes/(root)/route'
+import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as rootWeightIndexRouteImport } from './routes/(root)/weight/index'
+import { Route as rootExercisesIndexRouteImport } from './routes/(root)/exercises/index'
+import { Route as rootExerciseLogIndexRouteImport } from './routes/(root)/exercise-log/index'
 import { Route as rootDashboardIndexRouteImport } from './routes/(root)/dashboard/index'
+import { Route as rootBloodPressureIndexRouteImport } from './routes/(root)/blood-pressure/index'
 
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   id: '/terms-of-service',
@@ -31,24 +36,48 @@ const rootRouteRoute = rootRouteRouteImport.update({
   id: '/(root)',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authRouteRoute = authRouteRouteImport.update({
+  id: '/(auth)',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authRegisterRoute = authRegisterRouteImport.update({
-  id: '/(auth)/register',
+  id: '/register',
   path: '/register',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => authRouteRoute,
 } as any)
 const authLoginRoute = authLoginRouteImport.update({
-  id: '/(auth)/login',
+  id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => authRouteRoute,
+} as any)
+const rootWeightIndexRoute = rootWeightIndexRouteImport.update({
+  id: '/weight/',
+  path: '/weight/',
+  getParentRoute: () => rootRouteRoute,
+} as any)
+const rootExercisesIndexRoute = rootExercisesIndexRouteImport.update({
+  id: '/exercises/',
+  path: '/exercises/',
+  getParentRoute: () => rootRouteRoute,
+} as any)
+const rootExerciseLogIndexRoute = rootExerciseLogIndexRouteImport.update({
+  id: '/exercise-log/',
+  path: '/exercise-log/',
+  getParentRoute: () => rootRouteRoute,
 } as any)
 const rootDashboardIndexRoute = rootDashboardIndexRouteImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
+  getParentRoute: () => rootRouteRoute,
+} as any)
+const rootBloodPressureIndexRoute = rootBloodPressureIndexRouteImport.update({
+  id: '/blood-pressure/',
+  path: '/blood-pressure/',
   getParentRoute: () => rootRouteRoute,
 } as any)
 
@@ -58,7 +87,11 @@ export interface FileRoutesByFullPath {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/blood-pressure': typeof rootBloodPressureIndexRoute
   '/dashboard': typeof rootDashboardIndexRoute
+  '/exercise-log': typeof rootExerciseLogIndexRoute
+  '/exercises': typeof rootExercisesIndexRoute
+  '/weight': typeof rootWeightIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -66,17 +99,26 @@ export interface FileRoutesByTo {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/blood-pressure': typeof rootBloodPressureIndexRoute
   '/dashboard': typeof rootDashboardIndexRoute
+  '/exercise-log': typeof rootExerciseLogIndexRoute
+  '/exercises': typeof rootExercisesIndexRoute
+  '/weight': typeof rootWeightIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(auth)': typeof authRouteRouteWithChildren
   '/(root)': typeof rootRouteRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
+  '/(root)/blood-pressure/': typeof rootBloodPressureIndexRoute
   '/(root)/dashboard/': typeof rootDashboardIndexRoute
+  '/(root)/exercise-log/': typeof rootExerciseLogIndexRoute
+  '/(root)/exercises/': typeof rootExercisesIndexRoute
+  '/(root)/weight/': typeof rootWeightIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -86,7 +128,11 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/login'
     | '/register'
+    | '/blood-pressure'
     | '/dashboard'
+    | '/exercise-log'
+    | '/exercises'
+    | '/weight'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -94,25 +140,33 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/login'
     | '/register'
+    | '/blood-pressure'
     | '/dashboard'
+    | '/exercise-log'
+    | '/exercises'
+    | '/weight'
   id:
     | '__root__'
     | '/'
+    | '/(auth)'
     | '/(root)'
     | '/privacy-policy'
     | '/terms-of-service'
     | '/(auth)/login'
     | '/(auth)/register'
+    | '/(root)/blood-pressure/'
     | '/(root)/dashboard/'
+    | '/(root)/exercise-log/'
+    | '/(root)/exercises/'
+    | '/(root)/weight/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  authRouteRoute: typeof authRouteRouteWithChildren
   rootRouteRoute: typeof rootRouteRouteWithChildren
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
-  authLoginRoute: typeof authLoginRoute
-  authRegisterRoute: typeof authRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -138,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof rootRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)': {
+      id: '/(auth)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -150,14 +211,35 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof authRegisterRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof authRouteRoute
     }
     '/(auth)/login': {
       id: '/(auth)/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof authLoginRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof authRouteRoute
+    }
+    '/(root)/weight/': {
+      id: '/(root)/weight/'
+      path: '/weight'
+      fullPath: '/weight'
+      preLoaderRoute: typeof rootWeightIndexRouteImport
+      parentRoute: typeof rootRouteRoute
+    }
+    '/(root)/exercises/': {
+      id: '/(root)/exercises/'
+      path: '/exercises'
+      fullPath: '/exercises'
+      preLoaderRoute: typeof rootExercisesIndexRouteImport
+      parentRoute: typeof rootRouteRoute
+    }
+    '/(root)/exercise-log/': {
+      id: '/(root)/exercise-log/'
+      path: '/exercise-log'
+      fullPath: '/exercise-log'
+      preLoaderRoute: typeof rootExerciseLogIndexRouteImport
+      parentRoute: typeof rootRouteRoute
     }
     '/(root)/dashboard/': {
       id: '/(root)/dashboard/'
@@ -166,15 +248,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof rootDashboardIndexRouteImport
       parentRoute: typeof rootRouteRoute
     }
+    '/(root)/blood-pressure/': {
+      id: '/(root)/blood-pressure/'
+      path: '/blood-pressure'
+      fullPath: '/blood-pressure'
+      preLoaderRoute: typeof rootBloodPressureIndexRouteImport
+      parentRoute: typeof rootRouteRoute
+    }
   }
 }
 
+interface authRouteRouteChildren {
+  authLoginRoute: typeof authLoginRoute
+  authRegisterRoute: typeof authRegisterRoute
+}
+
+const authRouteRouteChildren: authRouteRouteChildren = {
+  authLoginRoute: authLoginRoute,
+  authRegisterRoute: authRegisterRoute,
+}
+
+const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
+  authRouteRouteChildren,
+)
+
 interface rootRouteRouteChildren {
+  rootBloodPressureIndexRoute: typeof rootBloodPressureIndexRoute
   rootDashboardIndexRoute: typeof rootDashboardIndexRoute
+  rootExerciseLogIndexRoute: typeof rootExerciseLogIndexRoute
+  rootExercisesIndexRoute: typeof rootExercisesIndexRoute
+  rootWeightIndexRoute: typeof rootWeightIndexRoute
 }
 
 const rootRouteRouteChildren: rootRouteRouteChildren = {
+  rootBloodPressureIndexRoute: rootBloodPressureIndexRoute,
   rootDashboardIndexRoute: rootDashboardIndexRoute,
+  rootExerciseLogIndexRoute: rootExerciseLogIndexRoute,
+  rootExercisesIndexRoute: rootExercisesIndexRoute,
+  rootWeightIndexRoute: rootWeightIndexRoute,
 }
 
 const rootRouteRouteWithChildren = rootRouteRoute._addFileChildren(
@@ -183,11 +294,10 @@ const rootRouteRouteWithChildren = rootRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  authRouteRoute: authRouteRouteWithChildren,
   rootRouteRoute: rootRouteRouteWithChildren,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
-  authLoginRoute: authLoginRoute,
-  authRegisterRoute: authRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

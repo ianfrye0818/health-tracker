@@ -44,9 +44,13 @@ export function FormInputField<T extends z.ZodType<FieldValues>>({
             </FieldLabel>
           )}
           <InputGroup>
-            <InputGroupInput {...field} {...props} />
+            <InputGroupInput
+              {...field}
+              {...props}
+              type={props.type === 'password' && showPassword ? 'text' : props.type}
+            />
             {props.type === 'password' && (
-              <InputGroupAddon align={'block-end'}>
+              <InputGroupAddon align={'inline-end'}>
                 <ShowPasswordButton
                   showPassword={showPassword}
                   setShowPassword={setShowPassword}
