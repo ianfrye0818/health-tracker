@@ -1,10 +1,10 @@
-import { UserDto } from "@/server/dtos";
+import { AppUser } from "@/lib/dtos";
+import { GetUsersFn } from "@/server/features/users/UsersController";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { USERS_QUERY_KEY } from "./shared";
-import { getUsers } from "@/server/functions/users";
 
-export const useGetUsers = (options?: UseQueryOptions<UserDto[]>) => useQuery({
+export const useGetUsers = (options?: Partial<UseQueryOptions<AppUser[]>>) => useQuery({
   queryKey: [USERS_QUERY_KEY],
-  queryFn: () => getUsers(),
+  queryFn: () => GetUsersFn(),
   ...options
 })

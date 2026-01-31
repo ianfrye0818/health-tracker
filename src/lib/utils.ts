@@ -2,6 +2,9 @@ import { clsx, type ClassValue } from 'clsx';
 import { format } from 'date-fns';
 import * as libPhoneNumber from 'libphonenumber-js';
 import { twMerge } from 'tailwind-merge';
+import { AppUser } from './dtos';
+import { UserRole } from './enums';
+import { SessionUser } from './session';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -141,33 +144,17 @@ export function convertToMs(minutes: number) {
   return minutes * 60 * 1000;
 }
 
-/**
- * Generic function to remove pagination fields from any query type.
- * Removes: page, limit, sortOrder, search, and sortBy fields.
- *
- * @param query - The query object that extends pagination schema
- * @returns The query object without pagination fields
- */
-export function parseQuery<T extends Record<string, any>>(
-  query?: T
-): Omit<T, 'page' | 'limit' | 'sortOrder' | 'search' | 'sortBy'> {
-  if (!query)
-    return {} as Omit<T, 'page' | 'limit' | 'sortOrder' | 'search' | 'sortBy'>;
-
-  // Remove pagination fields: page, limit, sortOrder, search, and sortBy
-  const { page, limit, sortOrder, search, sortBy, ...rest } = query;
-
-  return rest;
-}
-
-export const getStoredPageSize = (tableId: string) => {
-  try {
-    const stored = localStorage.getItem(tableId);
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      return Number(parsed.pageSize) || 10;
-    }
-  } catch {
-    return 10;
+  
+  export function hasAnyRole(user: AppUser | SessionUser | null | undefined, roles: UserRole[]) {
+    if (!user) return false;
+    return roles.some((role) => user.roles.includes(role));
   }
-};
+  
+  export function hasAllRoles(user: AppUser | SessionUser | null | undefined, roles: UserRole[]) {
+    if (!user) return false;
+    return roles.every((role) => (user as AppUser | SessionUser).roles.includes(role));
+  }
+  
+  export function isAdmin(user: AppUser | SessionUser | null | undefined) {
+    return hasAnyRole(user as AppUser | null | undefined, [UserRole.ADMIN]);
+  }

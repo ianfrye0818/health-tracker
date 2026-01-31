@@ -1,10 +1,13 @@
-import { WaterEntryDto } from "@/server/dtos";
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { WATER_ENTRIES_QUERY_KEY } from "./shared";
-import { getUserWaterEntries } from "@/server/functions/waterEntries/getUsersWaterEntires.fn";
+import { WaterEntryDto } from '@/lib/dtos';
+import { GetWaterEntriesFn } from '@/server/features/waterEntries/WaterEntryController';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { WATER_ENTRIES_QUERY_KEY } from './shared';
 
-export const useGetUsersWaterEntries = (options?: UseQueryOptions<WaterEntryDto[]>) => useQuery({
-  queryKey: [WATER_ENTRIES_QUERY_KEY],
-  queryFn: () => getUserWaterEntries(),
-  ...options
-})
+export const useGetUsersWaterEntries = (
+  options?: Partial<UseQueryOptions<WaterEntryDto[]>>
+) =>
+  useQuery({
+    queryKey: [WATER_ENTRIES_QUERY_KEY],
+    queryFn: () => GetWaterEntriesFn(),
+    ...options,
+  });

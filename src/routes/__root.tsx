@@ -1,23 +1,28 @@
-import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
-import { TanStackDevtools } from '@tanstack/react-devtools';
-import { Header } from '@/components/Header';
-import TanStackQueryDevtools from '@/integrations/tanstack-query/devtools';
-import appCss from '@/styles.css?url';
-import type { QueryClient } from '@tanstack/react-query';
-import { SessionProvider } from '@/lib/SessionContext';
-import { Toaster } from 'sonner';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { authClient } from '@/lib/auth-client';
-import { Footer } from '@/components/Footer';
 import { DefaultCatchBoundary } from '@/components/DefaultCatchBoundry';
 import { NotFound } from '@/components/NotFound';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import TanStackQueryDevtools from '@/integrations/tanstack-query/devtools';
+import { SessionUser } from '@/lib/session';
+import { GetCurrentUserFn } from '@/server/features/auth';
+import appCss from '@/styles.css?url';
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import type { QueryClient } from '@tanstack/react-query';
+import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { Toaster } from 'sonner';
 
 interface MyRouterContext {
   queryClient: QueryClient;
+  user: SessionUser | null;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+  beforeLoad: async () => {
+    const user = await GetCurrentUserFn();
+    return {
+      user,
+    }
+  },
   head: () => ({
     meta: [
       {
@@ -49,9 +54,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { data: sessionData } = authClient.useSession();
 
-  const session = sessionData ? { ...sessionData.session, user: sessionData.user } : null;
   return (
     <html
       lang='en'
@@ -62,15 +65,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className='min-h-screen'>
         <ThemeProvider>
-          <SessionProvider>
-            <Toaster />
-            <Header
-              isAuthenticated={!!session}
-              image={session?.user.image ?? ''}
-              name={session?.user.name ?? ''}
-            />
             {children}
-            <Footer />
+            <Toaster />
             <TanStackDevtools
               config={{
                 position: 'bottom-right',
@@ -84,7 +80,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               ]}
             />
             <Scripts />
-          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>

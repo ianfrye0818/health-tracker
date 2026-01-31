@@ -27,7 +27,8 @@ export type UserMinAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
-  emailVerified: boolean | null
+  passwordHash: string | null
+  isActive: boolean | null
   image: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -37,7 +38,8 @@ export type UserMaxAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
-  emailVerified: boolean | null
+  passwordHash: string | null
+  isActive: boolean | null
   image: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -47,8 +49,10 @@ export type UserCountAggregateOutputType = {
   id: number
   name: number
   email: number
-  emailVerified: number
+  passwordHash: number
+  isActive: number
   image: number
+  roles: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -59,7 +63,8 @@ export type UserMinAggregateInputType = {
   id?: true
   name?: true
   email?: true
-  emailVerified?: true
+  passwordHash?: true
+  isActive?: true
   image?: true
   createdAt?: true
   updatedAt?: true
@@ -69,7 +74,8 @@ export type UserMaxAggregateInputType = {
   id?: true
   name?: true
   email?: true
-  emailVerified?: true
+  passwordHash?: true
+  isActive?: true
   image?: true
   createdAt?: true
   updatedAt?: true
@@ -79,8 +85,10 @@ export type UserCountAggregateInputType = {
   id?: true
   name?: true
   email?: true
-  emailVerified?: true
+  passwordHash?: true
+  isActive?: true
   image?: true
+  roles?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -162,8 +170,10 @@ export type UserGroupByOutputType = {
   id: string
   name: string
   email: string
-  emailVerified: boolean
+  passwordHash: string
+  isActive: boolean
   image: string | null
+  roles: string[]
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -193,32 +203,34 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
-  emailVerified?: Prisma.BoolFilter<"User"> | boolean
+  passwordHash?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
+  roles?: Prisma.StringNullableListFilter<"User">
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  sessions?: Prisma.SessionListRelationFilter
-  accounts?: Prisma.AccountListRelationFilter
-  WeightEntires?: Prisma.WeightEntryListRelationFilter
-  BloodPressure?: Prisma.BloodPressureEntryListRelationFilter
+  weightEntires?: Prisma.WeightEntryListRelationFilter
+  bloodPressure?: Prisma.BloodPressureEntryListRelationFilter
   waterEntries?: Prisma.WaterEntryListRelationFilter
   exerciseEntries?: Prisma.ExerciseEntryListRelationFilter
+  exercises?: Prisma.ExerciseListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  roles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  sessions?: Prisma.SessionOrderByRelationAggregateInput
-  accounts?: Prisma.AccountOrderByRelationAggregateInput
-  WeightEntires?: Prisma.WeightEntryOrderByRelationAggregateInput
-  BloodPressure?: Prisma.BloodPressureEntryOrderByRelationAggregateInput
+  weightEntires?: Prisma.WeightEntryOrderByRelationAggregateInput
+  bloodPressure?: Prisma.BloodPressureEntryOrderByRelationAggregateInput
   waterEntries?: Prisma.WaterEntryOrderByRelationAggregateInput
   exerciseEntries?: Prisma.ExerciseEntryOrderByRelationAggregateInput
+  exercises?: Prisma.ExerciseOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -228,24 +240,27 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
-  emailVerified?: Prisma.BoolFilter<"User"> | boolean
+  passwordHash?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
+  roles?: Prisma.StringNullableListFilter<"User">
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  sessions?: Prisma.SessionListRelationFilter
-  accounts?: Prisma.AccountListRelationFilter
-  WeightEntires?: Prisma.WeightEntryListRelationFilter
-  BloodPressure?: Prisma.BloodPressureEntryListRelationFilter
+  weightEntires?: Prisma.WeightEntryListRelationFilter
+  bloodPressure?: Prisma.BloodPressureEntryListRelationFilter
   waterEntries?: Prisma.WaterEntryListRelationFilter
   exerciseEntries?: Prisma.ExerciseEntryListRelationFilter
+  exercises?: Prisma.ExerciseListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  roles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -260,8 +275,10 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  roles?: Prisma.StringNullableListFilter<"User">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -270,72 +287,78 @@ export type UserCreateInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -344,8 +367,10 @@ export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -354,18 +379,30 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  roles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -374,7 +411,8 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -384,7 +422,8 @@ export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -395,6 +434,10 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserCreaterolesInput = {
+  set: string[]
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -403,32 +446,9 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type UserCreateNestedOneWithoutSessionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
-  upsert?: Prisma.UserUpsertWithoutSessionsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
-}
-
-export type UserCreateNestedOneWithoutAccountsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountsInput
-  upsert?: Prisma.UserUpsertWithoutAccountsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
+export type UserUpdaterolesInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type UserCreateNestedOneWithoutWeightEntiresInput = {
@@ -487,186 +507,50 @@ export type UserUpdateOneRequiredWithoutExerciseEntriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExerciseEntriesInput, Prisma.UserUpdateWithoutExerciseEntriesInput>, Prisma.UserUncheckedUpdateWithoutExerciseEntriesInput>
 }
 
-export type UserCreateWithoutSessionsInput = {
-  id: string
-  name: string
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
-  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
-  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+export type UserCreateNestedOneWithoutExercisesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExercisesInput, Prisma.UserUncheckedCreateWithoutExercisesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExercisesInput
+  connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUncheckedCreateWithoutSessionsInput = {
-  id: string
-  name: string
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
-  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
-  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutSessionsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-}
-
-export type UserUpsertWithoutSessionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutSessionsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
-}
-
-export type UserUpdateWithoutSessionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
-  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
-  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutSessionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
-  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
-  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutAccountsInput = {
-  id: string
-  name: string
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
-  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
-  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutAccountsInput = {
-  id: string
-  name: string
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
-  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
-  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutAccountsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
-}
-
-export type UserUpsertWithoutAccountsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAccountsInput, Prisma.UserUncheckedUpdateWithoutAccountsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutAccountsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAccountsInput, Prisma.UserUncheckedUpdateWithoutAccountsInput>
-}
-
-export type UserUpdateWithoutAccountsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
-  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
-  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutAccountsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
-  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
-  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+export type UserUpdateOneRequiredWithoutExercisesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExercisesInput, Prisma.UserUncheckedCreateWithoutExercisesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExercisesInput
+  upsert?: Prisma.UserUpsertWithoutExercisesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExercisesInput, Prisma.UserUpdateWithoutExercisesInput>, Prisma.UserUncheckedUpdateWithoutExercisesInput>
 }
 
 export type UserCreateWithoutWeightEntiresInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWeightEntiresInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWeightEntiresInput = {
@@ -689,60 +573,64 @@ export type UserUpdateWithoutWeightEntiresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWeightEntiresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBloodPressureInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBloodPressureInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBloodPressureInput = {
@@ -765,60 +653,64 @@ export type UserUpdateWithoutBloodPressureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBloodPressureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWaterEntriesInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWaterEntriesInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWaterEntriesInput = {
@@ -841,60 +733,64 @@ export type UserUpdateWithoutWaterEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWaterEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutExerciseEntriesInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutExerciseEntriesInput = {
   id: string
   name: string
   email: string
-  emailVerified?: boolean
+  passwordHash: string
+  isActive?: boolean
   image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  WeightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  weightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
   waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutExerciseEntriesInput = {
@@ -917,30 +813,112 @@ export type UserUpdateWithoutExerciseEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutExerciseEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  WeightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
-  BloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  weightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
   waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutExercisesInput = {
+  id: string
+  name: string
+  email: string
+  passwordHash: string
+  isActive?: boolean
+  image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weightEntires?: Prisma.WeightEntryCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutExercisesInput = {
+  id: string
+  name: string
+  email: string
+  passwordHash: string
+  isActive?: boolean
+  image?: string | null
+  roles?: Prisma.UserCreaterolesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weightEntires?: Prisma.WeightEntryUncheckedCreateNestedManyWithoutUserInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedCreateNestedManyWithoutUserInput
+  waterEntries?: Prisma.WaterEntryUncheckedCreateNestedManyWithoutUserInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutExercisesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutExercisesInput, Prisma.UserUncheckedCreateWithoutExercisesInput>
+}
+
+export type UserUpsertWithoutExercisesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutExercisesInput, Prisma.UserUncheckedUpdateWithoutExercisesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutExercisesInput, Prisma.UserUncheckedCreateWithoutExercisesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutExercisesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutExercisesInput, Prisma.UserUncheckedUpdateWithoutExercisesInput>
+}
+
+export type UserUpdateWithoutExercisesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weightEntires?: Prisma.WeightEntryUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutExercisesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roles?: Prisma.UserUpdaterolesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weightEntires?: Prisma.WeightEntryUncheckedUpdateManyWithoutUserNestedInput
+  bloodPressure?: Prisma.BloodPressureEntryUncheckedUpdateManyWithoutUserNestedInput
+  waterEntries?: Prisma.WaterEntryUncheckedUpdateManyWithoutUserNestedInput
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -949,21 +927,19 @@ export type UserUncheckedUpdateWithoutExerciseEntriesInput = {
  */
 
 export type UserCountOutputType = {
-  sessions: number
-  accounts: number
-  WeightEntires: number
-  BloodPressure: number
+  weightEntires: number
+  bloodPressure: number
   waterEntries: number
   exerciseEntries: number
+  exercises: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sessions?: boolean | UserCountOutputTypeCountSessionsArgs
-  accounts?: boolean | UserCountOutputTypeCountAccountsArgs
-  WeightEntires?: boolean | UserCountOutputTypeCountWeightEntiresArgs
-  BloodPressure?: boolean | UserCountOutputTypeCountBloodPressureArgs
+  weightEntires?: boolean | UserCountOutputTypeCountWeightEntiresArgs
+  bloodPressure?: boolean | UserCountOutputTypeCountBloodPressureArgs
   waterEntries?: boolean | UserCountOutputTypeCountWaterEntriesArgs
   exerciseEntries?: boolean | UserCountOutputTypeCountExerciseEntriesArgs
+  exercises?: boolean | UserCountOutputTypeCountExercisesArgs
 }
 
 /**
@@ -974,20 +950,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SessionWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AccountWhereInput
 }
 
 /**
@@ -1018,21 +980,29 @@ export type UserCountOutputTypeCountExerciseEntriesArgs<ExtArgs extends runtime.
   where?: Prisma.ExerciseEntryWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountExercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExerciseWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   email?: boolean
-  emailVerified?: boolean
+  passwordHash?: boolean
+  isActive?: boolean
   image?: boolean
+  roles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  WeightEntires?: boolean | Prisma.User$WeightEntiresArgs<ExtArgs>
-  BloodPressure?: boolean | Prisma.User$BloodPressureArgs<ExtArgs>
+  weightEntires?: boolean | Prisma.User$weightEntiresArgs<ExtArgs>
+  bloodPressure?: boolean | Prisma.User$bloodPressureArgs<ExtArgs>
   waterEntries?: boolean | Prisma.User$waterEntriesArgs<ExtArgs>
   exerciseEntries?: boolean | Prisma.User$exerciseEntriesArgs<ExtArgs>
+  exercises?: boolean | Prisma.User$exercisesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1040,8 +1010,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
-  emailVerified?: boolean
+  passwordHash?: boolean
+  isActive?: boolean
   image?: boolean
+  roles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1050,8 +1022,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
-  emailVerified?: boolean
+  passwordHash?: boolean
+  isActive?: boolean
   image?: boolean
+  roles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1060,20 +1034,21 @@ export type UserSelectScalar = {
   id?: boolean
   name?: boolean
   email?: boolean
-  emailVerified?: boolean
+  passwordHash?: boolean
+  isActive?: boolean
   image?: boolean
+  roles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "isActive" | "image" | "roles" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  WeightEntires?: boolean | Prisma.User$WeightEntiresArgs<ExtArgs>
-  BloodPressure?: boolean | Prisma.User$BloodPressureArgs<ExtArgs>
+  weightEntires?: boolean | Prisma.User$weightEntiresArgs<ExtArgs>
+  bloodPressure?: boolean | Prisma.User$bloodPressureArgs<ExtArgs>
   waterEntries?: boolean | Prisma.User$waterEntriesArgs<ExtArgs>
   exerciseEntries?: boolean | Prisma.User$exerciseEntriesArgs<ExtArgs>
+  exercises?: boolean | Prisma.User$exercisesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1082,19 +1057,20 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    sessions: Prisma.$SessionPayload<ExtArgs>[]
-    accounts: Prisma.$AccountPayload<ExtArgs>[]
-    WeightEntires: Prisma.$WeightEntryPayload<ExtArgs>[]
-    BloodPressure: Prisma.$BloodPressureEntryPayload<ExtArgs>[]
+    weightEntires: Prisma.$WeightEntryPayload<ExtArgs>[]
+    bloodPressure: Prisma.$BloodPressureEntryPayload<ExtArgs>[]
     waterEntries: Prisma.$WaterEntryPayload<ExtArgs>[]
     exerciseEntries: Prisma.$ExerciseEntryPayload<ExtArgs>[]
+    exercises: Prisma.$ExercisePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     email: string
-    emailVerified: boolean
+    passwordHash: string
+    isActive: boolean
     image: string | null
+    roles: string[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1491,12 +1467,11 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  WeightEntires<T extends Prisma.User$WeightEntiresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$WeightEntiresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeightEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  BloodPressure<T extends Prisma.User$BloodPressureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$BloodPressureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BloodPressureEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  weightEntires<T extends Prisma.User$weightEntiresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$weightEntiresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeightEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bloodPressure<T extends Prisma.User$bloodPressureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bloodPressureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BloodPressureEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   waterEntries<T extends Prisma.User$waterEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$waterEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WaterEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exerciseEntries<T extends Prisma.User$exerciseEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$exerciseEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exercises<T extends Prisma.User$exercisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$exercisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExercisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1529,8 +1504,10 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly image: Prisma.FieldRef<"User", 'String'>
+  readonly roles: Prisma.FieldRef<"User", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1921,57 +1898,9 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.sessions
+ * User.weightEntires
  */
-export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Session
-   */
-  select?: Prisma.SessionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Session
-   */
-  omit?: Prisma.SessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SessionInclude<ExtArgs> | null
-  where?: Prisma.SessionWhereInput
-  orderBy?: Prisma.SessionOrderByWithRelationInput | Prisma.SessionOrderByWithRelationInput[]
-  cursor?: Prisma.SessionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
-}
-
-/**
- * User.accounts
- */
-export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Account
-   */
-  select?: Prisma.AccountSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Account
-   */
-  omit?: Prisma.AccountOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AccountInclude<ExtArgs> | null
-  where?: Prisma.AccountWhereInput
-  orderBy?: Prisma.AccountOrderByWithRelationInput | Prisma.AccountOrderByWithRelationInput[]
-  cursor?: Prisma.AccountWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
-}
-
-/**
- * User.WeightEntires
- */
-export type User$WeightEntiresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$weightEntiresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the WeightEntry
    */
@@ -1993,9 +1922,9 @@ export type User$WeightEntiresArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * User.BloodPressure
+ * User.bloodPressure
  */
-export type User$BloodPressureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$bloodPressureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the BloodPressureEntry
    */
@@ -2062,6 +1991,30 @@ export type User$exerciseEntriesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ExerciseEntryScalarFieldEnum | Prisma.ExerciseEntryScalarFieldEnum[]
+}
+
+/**
+ * User.exercises
+ */
+export type User$exercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Exercise
+   */
+  select?: Prisma.ExerciseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Exercise
+   */
+  omit?: Prisma.ExerciseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExerciseInclude<ExtArgs> | null
+  where?: Prisma.ExerciseWhereInput
+  orderBy?: Prisma.ExerciseOrderByWithRelationInput | Prisma.ExerciseOrderByWithRelationInput[]
+  cursor?: Prisma.ExerciseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExerciseScalarFieldEnum | Prisma.ExerciseScalarFieldEnum[]
 }
 
 /**

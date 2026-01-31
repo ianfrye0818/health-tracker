@@ -1,19 +1,15 @@
 import { UnauthorizedException } from '@/exceptions';
-import { auth } from '@/utils/auth';
+import { SessionUser, useAppSession } from '@/lib/session';
 import { createMiddleware } from '@tanstack/react-start';
 
 export const authMiddleware = createMiddleware().server(
-  async ({ next, request }) => {
-    const session = await auth.api.getSession({ headers: request.headers });
-    if (!session)
-      throw new UnauthorizedException(
-        'You must be logged in to access this resource'
-      );
+  async ({ next}) => {
+    const session = await useAppSession();
 
-    const user = session.user;
+    if (!session.data || !session.data.id) throw new UnauthorizedException('User not found in session');
 
     return next({
-      context: { user },
+      context: { user: session.data as SessionUser },
     });
   }
 );

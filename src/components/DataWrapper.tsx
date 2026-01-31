@@ -10,33 +10,6 @@ export interface DataWrapperProps<T> {
   noDataComponent?: React.ReactNode;
 }
 
-/**
- * DataWrapper - A component that handles loading, error, and empty states
- *
- * This ensures that child components only render when data exists,
- * eliminating the need for null checks in child components.
- *
- * @example
- * ```tsx
- * // Basic usage
- *
- * // With render prop pattern
- * <DataWrapper data={userData} isLoading={loading} error={error}>
- *   {(user) => <UserProfile user={user} />}
- * </DataWrapper>
- *
- * // With custom loading/error components
- * <DataWrapper
- *   data={userData}
- *   isLoading={loading}
- *   error={error}
- *   loadingComponent={<Spinner />}
- *   errorComponent={(err) => <CustomError error={err} />}
- * >
- *   <UserProfile user={userData} />
- * </DataWrapper>
- * ```
- */
 export function DataWrapper<T>({
   children,
   isLoading,

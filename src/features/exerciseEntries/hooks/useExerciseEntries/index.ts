@@ -1,4 +1,5 @@
 export * from './useCreateExerciseEntry.tsx'
-export * from './useGetUsersExerciseEntries.tsx'
-export * from './useUpdateExerciseEntry.tsx'
 export * from './useDeleteExerciseEntry.tsx'
+export * from './useGetExerciseEntries.tsx'
+export * from './useUpdateExerciseEntry.tsx'
+

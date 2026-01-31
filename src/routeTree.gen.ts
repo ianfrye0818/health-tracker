@@ -11,10 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as rootRouteRouteImport } from './routes/(root)/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as rootDashboardIndexRouteImport } from './routes/(root)/dashboard/index'
 
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   id: '/terms-of-service',
@@ -24,6 +25,10 @@ const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const rootRouteRoute = rootRouteRouteImport.update({
+  id: '/(root)',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -41,10 +46,10 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
+const rootDashboardIndexRoute = rootDashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => rootRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -53,7 +58,7 @@ export interface FileRoutesByFullPath {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/dashboard': typeof rootDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,16 +66,17 @@ export interface FileRoutesByTo {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/dashboard': typeof rootDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(root)': typeof rootRouteRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/(root)/dashboard/': typeof rootDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,7 +86,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/login'
     | '/register'
-    | '/api/auth/$'
+    | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -88,24 +94,25 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/login'
     | '/register'
-    | '/api/auth/$'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
+    | '/(root)'
     | '/privacy-policy'
     | '/terms-of-service'
     | '/(auth)/login'
     | '/(auth)/register'
-    | '/api/auth/$'
+    | '/(root)/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  rootRouteRoute: typeof rootRouteRouteWithChildren
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +129,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(root)': {
+      id: '/(root)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof rootRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -145,33 +159,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
+    '/(root)/dashboard/': {
+      id: '/(root)/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof rootDashboardIndexRouteImport
+      parentRoute: typeof rootRouteRoute
     }
   }
 }
 
+interface rootRouteRouteChildren {
+  rootDashboardIndexRoute: typeof rootDashboardIndexRoute
+}
+
+const rootRouteRouteChildren: rootRouteRouteChildren = {
+  rootDashboardIndexRoute: rootDashboardIndexRoute,
+}
+
+const rootRouteRouteWithChildren = rootRouteRoute._addFileChildren(
+  rootRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  rootRouteRoute: rootRouteRouteWithChildren,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

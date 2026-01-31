@@ -38,6 +38,7 @@ export type ExerciseSumAggregateOutputType = {
 export type ExerciseMinAggregateOutputType = {
   id: number | null
   name: string | null
+  userId: string | null
   caloriesPerMin: number | null
   exerciseType: string | null
   createdAt: Date | null
@@ -47,6 +48,7 @@ export type ExerciseMinAggregateOutputType = {
 export type ExerciseMaxAggregateOutputType = {
   id: number | null
   name: string | null
+  userId: string | null
   caloriesPerMin: number | null
   exerciseType: string | null
   createdAt: Date | null
@@ -56,6 +58,7 @@ export type ExerciseMaxAggregateOutputType = {
 export type ExerciseCountAggregateOutputType = {
   id: number
   name: number
+  userId: number
   caloriesPerMin: number
   exerciseType: number
   createdAt: number
@@ -77,6 +80,7 @@ export type ExerciseSumAggregateInputType = {
 export type ExerciseMinAggregateInputType = {
   id?: true
   name?: true
+  userId?: true
   caloriesPerMin?: true
   exerciseType?: true
   createdAt?: true
@@ -86,6 +90,7 @@ export type ExerciseMinAggregateInputType = {
 export type ExerciseMaxAggregateInputType = {
   id?: true
   name?: true
+  userId?: true
   caloriesPerMin?: true
   exerciseType?: true
   createdAt?: true
@@ -95,6 +100,7 @@ export type ExerciseMaxAggregateInputType = {
 export type ExerciseCountAggregateInputType = {
   id?: true
   name?: true
+  userId?: true
   caloriesPerMin?: true
   exerciseType?: true
   createdAt?: true
@@ -191,6 +197,7 @@ export type ExerciseGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type ExerciseGroupByOutputType = {
   id: number
   name: string
+  userId: string
   caloriesPerMin: number | null
   exerciseType: string
   createdAt: Date
@@ -223,39 +230,47 @@ export type ExerciseWhereInput = {
   NOT?: Prisma.ExerciseWhereInput | Prisma.ExerciseWhereInput[]
   id?: Prisma.IntFilter<"Exercise"> | number
   name?: Prisma.StringFilter<"Exercise"> | string
+  userId?: Prisma.StringFilter<"Exercise"> | string
   caloriesPerMin?: Prisma.FloatNullableFilter<"Exercise"> | number | null
   exerciseType?: Prisma.StringFilter<"Exercise"> | string
   createdAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   exerciseEntries?: Prisma.ExerciseEntryListRelationFilter
 }
 
 export type ExerciseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   caloriesPerMin?: Prisma.SortOrderInput | Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
   exerciseEntries?: Prisma.ExerciseEntryOrderByRelationAggregateInput
 }
 
 export type ExerciseWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  userId_name?: Prisma.ExerciseUserIdNameCompoundUniqueInput
   AND?: Prisma.ExerciseWhereInput | Prisma.ExerciseWhereInput[]
   OR?: Prisma.ExerciseWhereInput[]
   NOT?: Prisma.ExerciseWhereInput | Prisma.ExerciseWhereInput[]
   name?: Prisma.StringFilter<"Exercise"> | string
+  userId?: Prisma.StringFilter<"Exercise"> | string
   caloriesPerMin?: Prisma.FloatNullableFilter<"Exercise"> | number | null
   exerciseType?: Prisma.StringFilter<"Exercise"> | string
   createdAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   exerciseEntries?: Prisma.ExerciseEntryListRelationFilter
-}, "id">
+}, "id" | "userId_name">
 
 export type ExerciseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   caloriesPerMin?: Prisma.SortOrderInput | Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -273,6 +288,7 @@ export type ExerciseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ExerciseScalarWhereWithAggregatesInput | Prisma.ExerciseScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Exercise"> | number
   name?: Prisma.StringWithAggregatesFilter<"Exercise"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"Exercise"> | string
   caloriesPerMin?: Prisma.FloatNullableWithAggregatesFilter<"Exercise"> | number | null
   exerciseType?: Prisma.StringWithAggregatesFilter<"Exercise"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Exercise"> | Date | string
@@ -285,12 +301,14 @@ export type ExerciseCreateInput = {
   exerciseType: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutExercisesInput
   exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutExerciseInput
 }
 
 export type ExerciseUncheckedCreateInput = {
   id?: number
   name: string
+  userId: string
   caloriesPerMin?: number | null
   exerciseType: string
   createdAt?: Date | string
@@ -304,12 +322,14 @@ export type ExerciseUpdateInput = {
   exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutExercisesNestedInput
   exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutExerciseNestedInput
 }
 
 export type ExerciseUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   caloriesPerMin?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -320,6 +340,7 @@ export type ExerciseUncheckedUpdateInput = {
 export type ExerciseCreateManyInput = {
   id?: number
   name: string
+  userId: string
   caloriesPerMin?: number | null
   exerciseType: string
   createdAt?: Date | string
@@ -337,10 +358,21 @@ export type ExerciseUpdateManyMutationInput = {
 export type ExerciseUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   caloriesPerMin?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ExerciseListRelationFilter = {
+  every?: Prisma.ExerciseWhereInput
+  some?: Prisma.ExerciseWhereInput
+  none?: Prisma.ExerciseWhereInput
+}
+
+export type ExerciseOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ExerciseNullableScalarRelationFilter = {
@@ -348,9 +380,15 @@ export type ExerciseNullableScalarRelationFilter = {
   isNot?: Prisma.ExerciseWhereInput | null
 }
 
+export type ExerciseUserIdNameCompoundUniqueInput = {
+  userId: string
+  name: string
+}
+
 export type ExerciseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   caloriesPerMin?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -365,6 +403,7 @@ export type ExerciseAvgOrderByAggregateInput = {
 export type ExerciseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   caloriesPerMin?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -374,6 +413,7 @@ export type ExerciseMaxOrderByAggregateInput = {
 export type ExerciseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   caloriesPerMin?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -383,6 +423,48 @@ export type ExerciseMinOrderByAggregateInput = {
 export type ExerciseSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   caloriesPerMin?: Prisma.SortOrder
+}
+
+export type ExerciseCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ExerciseCreateWithoutUserInput, Prisma.ExerciseUncheckedCreateWithoutUserInput> | Prisma.ExerciseCreateWithoutUserInput[] | Prisma.ExerciseUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ExerciseCreateOrConnectWithoutUserInput | Prisma.ExerciseCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ExerciseCreateManyUserInputEnvelope
+  connect?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+}
+
+export type ExerciseUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ExerciseCreateWithoutUserInput, Prisma.ExerciseUncheckedCreateWithoutUserInput> | Prisma.ExerciseCreateWithoutUserInput[] | Prisma.ExerciseUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ExerciseCreateOrConnectWithoutUserInput | Prisma.ExerciseCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ExerciseCreateManyUserInputEnvelope
+  connect?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+}
+
+export type ExerciseUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ExerciseCreateWithoutUserInput, Prisma.ExerciseUncheckedCreateWithoutUserInput> | Prisma.ExerciseCreateWithoutUserInput[] | Prisma.ExerciseUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ExerciseCreateOrConnectWithoutUserInput | Prisma.ExerciseCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ExerciseUpsertWithWhereUniqueWithoutUserInput | Prisma.ExerciseUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ExerciseCreateManyUserInputEnvelope
+  set?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  disconnect?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  delete?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  connect?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  update?: Prisma.ExerciseUpdateWithWhereUniqueWithoutUserInput | Prisma.ExerciseUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ExerciseUpdateManyWithWhereWithoutUserInput | Prisma.ExerciseUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ExerciseScalarWhereInput | Prisma.ExerciseScalarWhereInput[]
+}
+
+export type ExerciseUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ExerciseCreateWithoutUserInput, Prisma.ExerciseUncheckedCreateWithoutUserInput> | Prisma.ExerciseCreateWithoutUserInput[] | Prisma.ExerciseUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ExerciseCreateOrConnectWithoutUserInput | Prisma.ExerciseCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ExerciseUpsertWithWhereUniqueWithoutUserInput | Prisma.ExerciseUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ExerciseCreateManyUserInputEnvelope
+  set?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  disconnect?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  delete?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  connect?: Prisma.ExerciseWhereUniqueInput | Prisma.ExerciseWhereUniqueInput[]
+  update?: Prisma.ExerciseUpdateWithWhereUniqueWithoutUserInput | Prisma.ExerciseUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ExerciseUpdateManyWithWhereWithoutUserInput | Prisma.ExerciseUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ExerciseScalarWhereInput | Prisma.ExerciseScalarWhereInput[]
 }
 
 export type ExerciseCreateNestedOneWithoutExerciseEntriesInput = {
@@ -409,17 +491,77 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ExerciseCreateWithoutUserInput = {
+  name: string
+  caloriesPerMin?: number | null
+  exerciseType: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  exerciseEntries?: Prisma.ExerciseEntryCreateNestedManyWithoutExerciseInput
+}
+
+export type ExerciseUncheckedCreateWithoutUserInput = {
+  id?: number
+  name: string
+  caloriesPerMin?: number | null
+  exerciseType: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedCreateNestedManyWithoutExerciseInput
+}
+
+export type ExerciseCreateOrConnectWithoutUserInput = {
+  where: Prisma.ExerciseWhereUniqueInput
+  create: Prisma.XOR<Prisma.ExerciseCreateWithoutUserInput, Prisma.ExerciseUncheckedCreateWithoutUserInput>
+}
+
+export type ExerciseCreateManyUserInputEnvelope = {
+  data: Prisma.ExerciseCreateManyUserInput | Prisma.ExerciseCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type ExerciseUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ExerciseWhereUniqueInput
+  update: Prisma.XOR<Prisma.ExerciseUpdateWithoutUserInput, Prisma.ExerciseUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ExerciseCreateWithoutUserInput, Prisma.ExerciseUncheckedCreateWithoutUserInput>
+}
+
+export type ExerciseUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ExerciseWhereUniqueInput
+  data: Prisma.XOR<Prisma.ExerciseUpdateWithoutUserInput, Prisma.ExerciseUncheckedUpdateWithoutUserInput>
+}
+
+export type ExerciseUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.ExerciseScalarWhereInput
+  data: Prisma.XOR<Prisma.ExerciseUpdateManyMutationInput, Prisma.ExerciseUncheckedUpdateManyWithoutUserInput>
+}
+
+export type ExerciseScalarWhereInput = {
+  AND?: Prisma.ExerciseScalarWhereInput | Prisma.ExerciseScalarWhereInput[]
+  OR?: Prisma.ExerciseScalarWhereInput[]
+  NOT?: Prisma.ExerciseScalarWhereInput | Prisma.ExerciseScalarWhereInput[]
+  id?: Prisma.IntFilter<"Exercise"> | number
+  name?: Prisma.StringFilter<"Exercise"> | string
+  userId?: Prisma.StringFilter<"Exercise"> | string
+  caloriesPerMin?: Prisma.FloatNullableFilter<"Exercise"> | number | null
+  exerciseType?: Prisma.StringFilter<"Exercise"> | string
+  createdAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
+}
+
 export type ExerciseCreateWithoutExerciseEntriesInput = {
   name: string
   caloriesPerMin?: number | null
   exerciseType: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutExercisesInput
 }
 
 export type ExerciseUncheckedCreateWithoutExerciseEntriesInput = {
   id?: number
   name: string
+  userId: string
   caloriesPerMin?: number | null
   exerciseType: string
   createdAt?: Date | string
@@ -448,9 +590,48 @@ export type ExerciseUpdateWithoutExerciseEntriesInput = {
   exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutExercisesNestedInput
 }
 
 export type ExerciseUncheckedUpdateWithoutExerciseEntriesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  caloriesPerMin?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ExerciseCreateManyUserInput = {
+  id?: number
+  name: string
+  caloriesPerMin?: number | null
+  exerciseType: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ExerciseUpdateWithoutUserInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  caloriesPerMin?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  exerciseEntries?: Prisma.ExerciseEntryUpdateManyWithoutExerciseNestedInput
+}
+
+export type ExerciseUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  caloriesPerMin?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  exerciseEntries?: Prisma.ExerciseEntryUncheckedUpdateManyWithoutExerciseNestedInput
+}
+
+export type ExerciseUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   caloriesPerMin?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -493,10 +674,12 @@ export type ExerciseCountOutputTypeCountExerciseEntriesArgs<ExtArgs extends runt
 export type ExerciseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  userId?: boolean
   caloriesPerMin?: boolean
   exerciseType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   exerciseEntries?: boolean | Prisma.Exercise$exerciseEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.ExerciseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["exercise"]>
@@ -504,46 +687,58 @@ export type ExerciseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type ExerciseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  userId?: boolean
   caloriesPerMin?: boolean
   exerciseType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["exercise"]>
 
 export type ExerciseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  userId?: boolean
   caloriesPerMin?: boolean
   exerciseType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["exercise"]>
 
 export type ExerciseSelectScalar = {
   id?: boolean
   name?: boolean
+  userId?: boolean
   caloriesPerMin?: boolean
   exerciseType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ExerciseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "caloriesPerMin" | "exerciseType" | "createdAt" | "updatedAt", ExtArgs["result"]["exercise"]>
+export type ExerciseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "caloriesPerMin" | "exerciseType" | "createdAt" | "updatedAt", ExtArgs["result"]["exercise"]>
 export type ExerciseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   exerciseEntries?: boolean | Prisma.Exercise$exerciseEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.ExerciseCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ExerciseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ExerciseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ExerciseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type ExerciseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
 
 export type $ExercisePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Exercise"
   objects: {
+    user: Prisma.$UserPayload<ExtArgs>
     exerciseEntries: Prisma.$ExerciseEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
+    userId: string
     caloriesPerMin: number | null
     exerciseType: string
     createdAt: Date
@@ -942,6 +1137,7 @@ readonly fields: ExerciseFieldRefs;
  */
 export interface Prisma__ExerciseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   exerciseEntries<T extends Prisma.Exercise$exerciseEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Exercise$exerciseEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -974,6 +1170,7 @@ export interface Prisma__ExerciseClient<T, Null = never, ExtArgs extends runtime
 export interface ExerciseFieldRefs {
   readonly id: Prisma.FieldRef<"Exercise", 'Int'>
   readonly name: Prisma.FieldRef<"Exercise", 'String'>
+  readonly userId: Prisma.FieldRef<"Exercise", 'String'>
   readonly caloriesPerMin: Prisma.FieldRef<"Exercise", 'Float'>
   readonly exerciseType: Prisma.FieldRef<"Exercise", 'String'>
   readonly createdAt: Prisma.FieldRef<"Exercise", 'DateTime'>
@@ -1227,6 +1424,10 @@ export type ExerciseCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    */
   data: Prisma.ExerciseCreateManyInput | Prisma.ExerciseCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExerciseIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1297,6 +1498,10 @@ export type ExerciseUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many Exercises to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExerciseIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
